@@ -70,8 +70,8 @@ const Navbar = () => {
       <div className="flex flex-1 flex-row justify-start">
         <Link href="/">
           <div className="flexCenter md:hidden cursor-pointer" onClick={() => {}}>
-            <Image src={images.logo02} objectFit="contain" width={32} height={32} alt="logo" />
-            <p className="dark:text-white text-nft-black-1 font-semibold text-lg ml-1"> Cryptoket </p>
+            <Image src={images.logo02} objectFit="contain" width={35} height={35} alt="logo" />
+            <p className="dark:text-white text-nft-black-1 font-semibold text-lg ml-2"> CryptoEth </p>
           </div>
         </Link>
         <Link href="/">
