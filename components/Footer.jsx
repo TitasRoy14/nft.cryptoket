@@ -17,7 +17,7 @@ const Footer = () => {
   const { theme } = useTheme();
 
   return (
-    <footer className="flexCenter flex-col border-t dark:border-nft-black-1 border-nft-gray-1 sm:py-8 py-16">
+    <footer className="flexCenter flex-col dark:border-nft-black-1 border-nft-gray-1 sm:py-8 py-8">
       <div className="w-full minmd:w-4/5 flex flex-row md:flex-col mt-5 border-t  sm:px-4 px-16">
         <div className="flexStart flex-1 flex-col">
           <div className="flexCenter cursor-pointer mt-2">
@@ -27,7 +27,7 @@ const Footer = () => {
           <p className=" font-poppins dark:text-white text-nft-black-1 font-medium text-base mt-6 ">Get the latest updates</p>
           <div className="flexBetween md:w-full minlg:w-557 w-357 mt-6 dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 rounded-md ">
 
-            <input type="email" placeholder="Enter Your M essage" className="h-full flex-1 w-full dark:bg-nft-black-2 bg-white px-4 rounded-md dark:text-white text-nft-black-1 font-normal text-xs minlg:text-lg outline-none" />
+            <input type="email" placeholder="Enter Your Message" className="h-full flex-1 w-full dark:bg-nft-black-2 bg-white px-4 rounded-md dark:text-white text-nft-black-1 font-normal text-xs minlg:text-lg outline-none" />
             <div className="flex-initial">
               <Button btnName="Email Me" classStyles="rounded-md" />
             </div>

@@ -4,7 +4,6 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// import { isMobile } from 'web3modal';
 import images from '../assets';
 import { Button } from '.';
 
@@ -21,7 +20,7 @@ const MenuItems = (isMobile, active, setActive) => {
   // isMobile = false;
 
   return (
-    <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-col h-full'}`}>
+    <ul className={`list-none flexCenter flex-row ${isMobile && 'flex-row h-full'}`}>
 
       {['Explore NFTs', 'Listed NFTs', 'My NFTs'].map((item, i) => (
         <li
