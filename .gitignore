@@ -6,6 +6,8 @@ node_modules
 /.next/
 /out/
 
+/utils/config.js
+
 # production
 /build
 

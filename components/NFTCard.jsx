@@ -14,8 +14,8 @@ const NFTCard = ({ nft }) => {
         <div className="relative w-full h-52 sm:h-36 xs:h-56 minmd:h-60 minlg:h-300 rounded-2xl overflow-hidden">
           <Image
             src={nft.image || images[`nft${nft.i}`]}
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: 'contain' }}
             alt={`nft${nft.i}`}
           />
         </div>
