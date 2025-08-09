@@ -110,28 +110,28 @@ contract NFTMarketplace is ERC721URIStorage {
   payable(idToMarketItem[_tokenId].seller).transfer(msg.value);
  }
 
- function fetchMarketItems() public view returns (MarketItem[] memory) {
-  uint itemCount = _tokenIds.current();
-  uint unsoldItemCount = _tokenIds.current() - _itemsSold.current();
-  uint currentIndex = 0 ;
+function fetchMarketItems() public view returns (MarketItem[] memory) {
+    uint itemCount = _tokenIds.current();
+    uint unsoldItemCount = _tokenIds.current() - _itemsSold.current();
+    uint currentIndex = 0;
 
-  MarketItem[] memory items = new MarketItem[](unsoldItemCount);
+    MarketItem[] memory items = new MarketItem[](unsoldItemCount);
 
-  for(uint i = 0; i < itemCount ; i++){
-    // this means market item will start from 0+1 becz MarketItem cannot be 0 and the seller has to be the contract
-      if(idToMarketItem[i + 1].seller == address(this)){
-          uint currentId = i+1 ;
+    for(uint i = 0; i < itemCount; i++){
+        // Check if the item is unsold by verifying:
+        // 1. Owner is the contract (item is held by marketplace)
+        // 2. Item is not marked as sold
+        if(idToMarketItem[i + 1].owner == address(this) && 
+           idToMarketItem[i + 1].sold == false){
+            uint currentId = i + 1;
+            MarketItem storage currentItem = idToMarketItem[currentId];
+            items[currentIndex] = currentItem;
+            currentIndex += 1;
+        }
+    }
 
-          MarketItem storage currentItem = idToMarketItem[currentId];
-
-          items[currentIndex]= currentItem ;
-
-          currentIndex += 1;
-      }
-  }
-
-  return items;
- }
+    return items;
+}
 
  function fetchMyNFTs() public view returns(MarketItem[] memory) {
   uint totalItemCount = _tokenIds.current();

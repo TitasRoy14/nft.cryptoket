@@ -26,7 +26,7 @@ export const NFTProvider = ({ children }) => {
 
     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
 
-    console.log(accounts);
+    // console.log(accounts);
 
     if (accounts.length) {
       setcurrentAccount(accounts[0]);
@@ -81,15 +81,11 @@ export const NFTProvider = ({ children }) => {
           image: fileUrl,
         },
       });
-      console.log(upload);
+      //  console.log(upload);
 
       const url = await pinata.gateways.public.convert(upload.cid);
 
-      console.log(2);
-
       await createSale(url, price);
-
-      console.log(3);
 
       router.push('/');
     } catch (error) {
@@ -106,7 +102,7 @@ export const NFTProvider = ({ children }) => {
 
     const price = ethers.utils.parseUnits(formInputPrice, 'ether');
     const contract = fetchContract(signer);
-    console.log(contract);
+    // console.log(contract);
 
     const listingPrice = await contract.getListingPrice();
 
@@ -117,6 +113,46 @@ export const NFTProvider = ({ children }) => {
     await transaction.wait();
   };
 
+  const fetchNFTs = async () => {
+    const provider = new ethers.providers.JsonRpcProvider();
+    const contract = fetchContract(provider);
+
+    const data = await contract.fetchMarketItems();
+
+    const items = await Promise.all(
+      data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+        const tokenURI = await contract.tokenURI(tokenId);
+
+        const {
+          files: {
+            [0]: {
+              keyvalues: { name, image, description },
+            },
+          },
+        } = await pinata.files.public.list().keyvalues({
+          image: tokenURI,
+        });
+
+        const price = ethers.utils.formatUnits(
+          unformattedPrice.toString(),
+          'ether'
+        );
+
+        return {
+          price,
+          tokenID: tokenId.toNumber(),
+          name,
+          image,
+          description,
+          seller,
+          owner,
+          tokenURI,
+        };
+      })
+    );
+    return items;
+  };
+
   return (
     <NFTContext.Provider
       value={{
@@ -125,6 +161,7 @@ export const NFTProvider = ({ children }) => {
         currentAccount,
         uploadToIPFS,
         createNFT,
+        fetchNFTs,
       }}
     >
       {children}

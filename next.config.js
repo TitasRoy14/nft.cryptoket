@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-}
+  images: {
+    domains: ['emerald-raw-porcupine-369.mypinata.cloud'],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
