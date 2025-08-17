@@ -153,6 +153,54 @@ export const NFTProvider = ({ children }) => {
     return items;
   };
 
+  const fetchMyNFTsOrListedNFTS = async (type) => {
+    const web3modal = new Web3Modal();
+    const connection = await web3modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    const contract = fetchContract(signer);
+
+    const data =
+      type === 'fetchItemsListed'
+        ? await contract.fetchItemListed()
+        : await contract.fetchMyNFTs();
+
+    const items = await Promise.all(
+      data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
+        const tokenURI = await contract.tokenURI(tokenId);
+
+        const {
+          files: {
+            [0]: {
+              keyvalues: { name, image, description },
+            },
+          },
+        } = await pinata.files.public.list().keyvalues({
+          image: tokenURI,
+        });
+
+        const price = ethers.utils.formatUnits(
+          unformattedPrice.toString(),
+          'ether'
+        );
+
+        return {
+          price,
+          tokenID: tokenId.toNumber(),
+          name,
+          image,
+          description,
+          seller,
+          owner,
+          tokenURI,
+        };
+      })
+    );
+
+    return items;
+  };
+
   return (
     <NFTContext.Provider
       value={{
@@ -162,6 +210,7 @@ export const NFTProvider = ({ children }) => {
         uploadToIPFS,
         createNFT,
         fetchNFTs,
+        fetchMyNFTsOrListedNFTS,
       }}
     >
       {children}

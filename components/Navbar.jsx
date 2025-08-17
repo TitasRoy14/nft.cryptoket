@@ -14,7 +14,7 @@ const MenuItems = (isMobile, active, setActive) => {
       case 0:
         return '/';
       case 1:
-        return '/created-nfts';
+        return '/listed-nfts';
       case 2:
         return 'my-nft';
       default:
@@ -125,10 +125,11 @@ const Navbar = () => {
           />
           <label
             htmlFor="checkbox"
-            className="flexBetween w-8 h-4 bg-black rounded-2xl p-1 relative label"
+            className="flexBetween w-9 h-4 bg-black rounded-2xl p-1 relative label"
           >
-            <i className="fas fa-sun" />
+            <i className="fas fa-sun text-sm" />
             <i className="fas fa-moon" />
+
             <div className="w-3 h-3 absolute bg-white rounded-full ball" />
           </label>
         </div>
